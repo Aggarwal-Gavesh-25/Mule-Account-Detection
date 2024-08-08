@@ -2,6 +2,8 @@
 
 ## Description
 
+> **Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf)**
+
 **Objective:** Build a model to detect mule accounts in banking for real-world deployment.
 
 **Approach:**
@@ -16,11 +18,15 @@
 
 ## Repository Structure
 
+> **Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf)**
+
 - This repository contains all the code required to replicate the project.
 - The code is thoroughly commented to ensure clarity and ease of understanding.
 
 
 ## Dataset Preparation
+
+> **Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf)**
 
 **Note:** This is the most important step. Correctly preparing the datasets will ensure the scripts run successfully. So, follow all the steps carefully.
 
@@ -198,7 +204,87 @@ Instructions:
 
 **Step 5**
 
+From the Base.csv file remove nine low-priority features and create a new .csv file with the name base_less_cols.csv.
+
+Low-priority columns: housing_status, phone_home_valid, phone_mobile_valid, bank_months_count, has_other_cards, proposed_credit_limit, source, device_os, device_fraud_count.
+
+Save this .csv files in the archive folder.
+
+Use these python scripts to do it:-
+```python
+import pandas as pd
+import os
+
+# Define the file names
+base_file = 'Base.csv'
+new_file = 'base_less_cols.csv'
+
+# Low-priority columns to remove
+columns_to_remove = [
+    'housing_status', 'phone_home_valid', 'phone_mobile_valid',
+    'bank_months_count', 'has_other_cards', 'proposed_credit_limit',
+    'source', 'device_os', 'device_fraud_count'
+]
+
+# Path to your archive folder
+archive_path = '/path/to/your/archive/folder/'
+
+# Read the original Base.csv file
+df = pd.read_csv(os.path.join(archive_path, base_file))
+
+# Drop the low-priority columns
+df_less_cols = df.drop(columns=columns_to_remove)
+
+# Save the new dataframe to a .csv file
+df_less_cols.to_csv(os.path.join(archive_path, new_file), index=False)
+
+print("Low-priority columns have been removed from Base.csv and saved as base_less_cols.csv in the archive folder.")
+```
+
+Instructions:
+
+- Replace /path/to/your/archive/folder/ with the path to your archive folder.
+
 **Step 6**
+
+Divide the base_less_cols.csv file into two .csv files:
+
+base_less_cols_half1.csv: "Account_Number" column from 1 to 5,00,000.
+
+base_less_cols_half2.csv: "Account_Number" column from 5,00,001 to 10,00,000.
+
+Save these .csv files in the [archive](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/tree/main/Mule_Account_Detection/32%20Column%20Dataset/archive) folder.
+
+
+Use these python scripts to do it:-
+```python
+import pandas as pd
+import os
+
+# Define file names
+input_file = 'base_less_cols.csv'
+half1_file = 'base_less_cols_half1.csv'
+half2_file = 'base_less_cols_half2.csv'
+
+# Path to your archive folder
+archive_path = '/path/to/your/archive/folder/'
+
+# Read the base_less_cols.csv file
+df = pd.read_csv(os.path.join(archive_path, input_file))
+
+# Split the data into two halves based on "Account_Number"
+df_half1 = df[df['Account_Number'] <= 500000]
+df_half2 = df[df['Account_Number'] > 500000]
+
+# Save the two halves into separate .csv files
+df_half1.to_csv(os.path.join(archive_path, half1_file), index=False)
+df_half2.to_csv(os.path.join(archive_path, half2_file), index=False)
+
+print("base_less_cols.csv has been divided into base_less_cols_half1.csv and base_less_cols_half2.csv and saved in the archive folder.")
+```
+Instructions:
+
+- Replace /path/to/your/archive/folder/ with the path to your archive folder.
 
 **Step 7**
 
@@ -228,7 +314,11 @@ pip install pycaret
 
 ## Usage
 
+> **Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf)**
+
 Run it step wise to understand better.
+
+**Note:** Training the models will take time.
 
 **Step 1:**
 
@@ -236,15 +326,11 @@ Run it step wise to understand better.
 
 - Follow the comments in the notebook.
 
-- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
-
 **Step 2:**
 
 - The notebook: [3. 0-5_months_train_6-7_test_base_less.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/3.%200-5_months_train_6-7_test_base_less.ipynb)
 
 - Follow the comments in the notebook.
-
-- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
 
 **Step 3:**
 
@@ -252,15 +338,11 @@ Run it step wise to understand better.
 
 - Follow the comments in the notebook.
 
-- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
-
 **Step 4:**
 
 - The notebook: [5. Base_train_1st_half_test_2nd_half.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/5.%20Base_train_1st_half_test_2nd_half.ipynb)
 
 - Follow the comments in the notebook.
-
-- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
 
 **Step 5:**
 
@@ -268,15 +350,11 @@ Run it step wise to understand better.
 
 - Follow the comments in the notebook.
 
-- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
-
 **Step 6:**
 
 - The notebook: [7. All_variants_train_base_test.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/7.%20All_variants_train_base_test.ipynb)
 
 - Follow the comments in the notebook.
-
-- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
 
 **Step 7:**
 
@@ -284,7 +362,6 @@ Run it step wise to understand better.
 
 - Follow the comments in the notebook.
 
-- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
 
 
 
