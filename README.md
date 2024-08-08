@@ -320,7 +320,13 @@ Run it step wise to understand better.
 
 **Note:** Training the models will take time.
 
+**Note:** The final model, which achieved an accuracy of 99%, is detailed in step 6. The other steps serve as foundational elements that contributed to the development and understanding of the model. To gain a comprehensive understanding of the process from the ground up, it is essential to review all steps. For a detailed, step-by-step explanation, please **refer to the [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf).** Additionally, reviewing the comments within the notebook will provide further insights.
+
 **Step 1:**
+
+> Divided the dataset based on "month".
+
+> Testing data is unseen.
 
 - The notebook: [2. 0-5_months_train_6-7_test_base.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/2.%200-5_months_train_6-7_test_base.ipynb)
 
@@ -328,11 +334,17 @@ Run it step wise to understand better.
 
 **Step 2:**
 
+> Divided the dataset based on "month". Removed the low-priority features.
+
+> Testing data is unseen.
+
 - The notebook: [3. 0-5_months_train_6-7_test_base_less.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/3.%200-5_months_train_6-7_test_base_less.ipynb)
 
 - Follow the comments in the notebook.
 
 **Step 3:**
+
+> Testing data is seen.
 
 - The notebook: [4. Base_train_Base_test.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/4.%20Base_train_Base_test.ipynb)
 
@@ -340,11 +352,19 @@ Run it step wise to understand better.
 
 **Step 4:**
 
+> Divided the dataset in the ratio 50:50.
+
+> Testing data is unseen.
+
 - The notebook: [5. Base_train_1st_half_test_2nd_half.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/5.%20Base_train_1st_half_test_2nd_half.ipynb)
 
 - Follow the comments in the notebook.
 
 **Step 5:**
+
+> Divided the dataset in the ratio 99:1.
+
+> Testing data is unseen.
 
 - The notebook: [6. Base_train_99%_test_1%.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/6.%20Base_train_99%25_test_1%25.ipynb)
 
@@ -352,9 +372,17 @@ Run it step wise to understand better.
 
 **Step 6:**
 
+> Combined all variants to create a larger and more diverse training dataset.
+
+> Testing data is unseen.
+
 - The notebook: [7. All_variants_train_base_test.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/7.%20All_variants_train_base_test.ipynb)
 
 - Follow the comments in the notebook.
+
+***To verify the uniqueness of the .csv files— Base, Variant I, Variant II, Variant III, Variant IV, and Variant V, I executed step 7.***
+
+***The low accuracy observed in step 7 indicates that these .csv files are distinct and poorly correlated, thus confirming that the testing data is indeed unseen.***
 
 **Step 7:**
 
@@ -362,18 +390,4 @@ Run it step wise to understand better.
 
 - Follow the comments in the notebook.
 
-
-
-
-
-
-The [first notebook](notebooks/generate_dataset_variants.ipynb) regards the process of sampling from a large dataset to obtain the different variants that constitute the suite of datasets.
-
-The [second notebook](notebooks/empirical_results.ipynb) presents the train of 100 LightGBM models (hyperparameters selected through random search) on the suite of datasets, as well as plots of the results. 
-
-To replicate the environment used in the experiments, install the  `requirements.txt` file via pip in a Python 3.7 environment. 
-
-Additionally, you can find the official documentation of the suite of datasets in the `documents` folder. In this folder you will find the [Paper](documents/BAF_paper.pdf) and [Datasheet](documents/datasheet.pdf)
-
-The paper contains more detailed information on motivation, generation of the base dataset and [variants](notebooks/generate_dataset_variants.ipynb) and an experiment performed in the [empirical results notebook](notebooks/empirical_results.ipynb).
-The datasheet contains a summarized description of the dataset. 
+## All the best
