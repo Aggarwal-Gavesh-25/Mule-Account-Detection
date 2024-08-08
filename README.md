@@ -39,27 +39,36 @@ Put them in the [archive](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Det
 
 Use these python scripts to do it:-
 ```python
-import glob
 import pandas as pd
+import os
 
-extension = "csv"  # or "parquet", depending on the downloaded file
-data_paths = glob.glob(f"</path/to/datasets/>*.{extension}")
+# Define file names
+files = ['Base.csv', 'Variant I.csv', 'Variant II.csv', 'Variant III.csv', 'Variant IV.csv', 'Variant V.csv']
 
-def read_dataset(path, ext=extension):
-    if ext == "csv":
-        return pd.read_csv(path, index_col=0)
-    elif ext == "parquet":
-        return pd.read_parquet(path)
-    else:
-        raise ValueError(f"Invalid extension: '{ext}'.")
+# Path to your archive folder where the .csv files are located
+archive_path = '/path/to/your/archive/folder/'
 
-def get_variant(path):
-        return path.split("/")[-1].split(".")[0]
+# Create account numbers
+account_numbers = list(range(1, 1000001))
 
-dataframes = {
-    get_variant(path): read_dataset(path) for path in data_paths
-}
+# Process each file
+for file in files:
+    # Read the CSV file
+    df = pd.read_csv(os.path.join(archive_path, file))
+    
+    # Add the "Account_Number" column
+    df['Account_Number'] = account_numbers
+    
+    # Overwrite the old file with the modified data
+    df.to_csv(os.path.join(archive_path, file), index=False)
+
+print("All files have been updated and replaced in the archive folder.")
 ```
+
+Instructions:
+
+- Replace /path/to/your/archive/folder/ with the directory path where your .csv files are located in the “archive” folder.
+
 
 **Step 2**
 
@@ -73,27 +82,34 @@ Save these .csv files in the [archive](https://github.com/Aggarwal-Gavesh-25/Mul
 
 Use these python scripts to do it:-
 ```python
-import glob
 import pandas as pd
+import os
 
-extension = "csv"  # or "parquet", depending on the downloaded file
-data_paths = glob.glob(f"</path/to/datasets/>*.{extension}")
+# Define file names
+base_file = 'Base.csv'
+half1_file = 'Base_half1.csv'
+half2_file = 'Base_half2.csv'
 
-def read_dataset(path, ext=extension):
-    if ext == "csv":
-        return pd.read_csv(path, index_col=0)
-    elif ext == "parquet":
-        return pd.read_parquet(path)
-    else:
-        raise ValueError(f"Invalid extension: '{ext}'.")
+# Path to your archive folder where the .csv file is located
+archive_path = '/path/to/your/archive/folder/'
 
-def get_variant(path):
-        return path.split("/")[-1].split(".")[0]
+# Read the original Base.csv file
+df = pd.read_csv(os.path.join(archive_path, base_file))
 
-dataframes = {
-    get_variant(path): read_dataset(path) for path in data_paths
-}
+# Split the data into two halves based on "Account_Number"
+df_half1 = df[df['Account_Number'] <= 500000]
+df_half2 = df[df['Account_Number'] > 500000]
+
+# Save the two halves into separate .csv files
+df_half1.to_csv(os.path.join(archive_path, half1_file), index=False)
+df_half2.to_csv(os.path.join(archive_path, half2_file), index=False)
+
+print("Base.csv has been divided into Base_half1.csv and Base_half2.csv and saved in the archive folder.")
 ```
+
+Instructions:
+
+- Replace /path/to/your/archive/folder/ with the path to your archive folder.
 
 **Step 3**
 
@@ -107,83 +123,78 @@ Save these .csv files in the [archive](https://github.com/Aggarwal-Gavesh-25/Mul
 
 Use these python scripts to do it:-
 ```python
-import glob
 import pandas as pd
+import os
 
-extension = "csv"  # or "parquet", depending on the downloaded file
-data_paths = glob.glob(f"</path/to/datasets/>*.{extension}")
+# Define file names
+base_file = 'Base.csv'
+base_99_file = 'base_99_%.csv'
+base_1_file = 'base_1_%.csv'
 
-def read_dataset(path, ext=extension):
-    if ext == "csv":
-        return pd.read_csv(path, index_col=0)
-    elif ext == "parquet":
-        return pd.read_parquet(path)
-    else:
-        raise ValueError(f"Invalid extension: '{ext}'.")
+# Path to your archive folder where the .csv file is located
+archive_path = '/path/to/your/archive/folder/'
 
-def get_variant(path):
-        return path.split("/")[-1].split(".")[0]
+# Read the original Base.csv file
+df = pd.read_csv(os.path.join(archive_path, base_file))
 
-dataframes = {
-    get_variant(path): read_dataset(path) for path in data_paths
-}
+# Split the data into two parts based on "Account_Number"
+df_base_99 = df[df['Account_Number'] <= 990000]
+df_base_1 = df[df['Account_Number'] > 990000]
+
+# Save the two parts into separate .csv files
+df_base_99.to_csv(os.path.join(archive_path, base_99_file), index=False)
+df_base_1.to_csv(os.path.join(archive_path, base_1_file), index=False)
+
+print("Base.csv has been divided into base_99_%.csv and base_1_%.csv and saved in the archive folder.")
 ```
+
+Instructions:
+
+- Replace /path/to/your/archive/folder/ with the path to your archive folder.
 
 **Step 4**
 
 Combine all the variants with the name "All_Variants_Combined.csv"
 
-Use these python scripts to do it:-
-```python
-import glob
-import pandas as pd
-
-extension = "csv"  # or "parquet", depending on the downloaded file
-data_paths = glob.glob(f"</path/to/datasets/>*.{extension}")
-
-def read_dataset(path, ext=extension):
-    if ext == "csv":
-        return pd.read_csv(path, index_col=0)
-    elif ext == "parquet":
-        return pd.read_parquet(path)
-    else:
-        raise ValueError(f"Invalid extension: '{ext}'.")
-
-def get_variant(path):
-        return path.split("/")[-1].split(".")[0]
-
-dataframes = {
-    get_variant(path): read_dataset(path) for path in data_paths
-}
-```
-
 "Account_Number" column needs to be changed with values from 1 to 50,00,000.
 
 Save this .csv file in the [archive](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/tree/main/Mule_Account_Detection/32%20Column%20Dataset/archive) folder.
 
-Use this python script to do it:-
+Use these python scripts to do it:-
 ```python
-import glob
 import pandas as pd
+import os
 
-extension = "csv"  # or "parquet", depending on the downloaded file
-data_paths = glob.glob(f"</path/to/datasets/>*.{extension}")
+# Define file names for the variants
+variant_files = ['Variant I.csv', 'Variant II.csv', 'Variant III.csv', 'Variant IV.csv', 'Variant V.csv']
+combined_file = 'All_Variants_Combined.csv'
 
-def read_dataset(path, ext=extension):
-    if ext == "csv":
-        return pd.read_csv(path, index_col=0)
-    elif ext == "parquet":
-        return pd.read_parquet(path)
-    else:
-        raise ValueError(f"Invalid extension: '{ext}'.")
+# Path to your archive folder
+archive_path = '/path/to/your/archive/folder/'
 
-def get_variant(path):
-        return path.split("/")[-1].split(".")[0]
+# List to hold individual dataframes
+dfs = []
 
-dataframes = {
-    get_variant(path): read_dataset(path) for path in data_paths
-}
+# Read each variant file and append to the list
+for file in variant_files:
+    df = pd.read_csv(os.path.join(archive_path, file))
+    dfs.append(df)
+
+# Concatenate all dataframes into one
+combined_df = pd.concat(dfs, ignore_index=True)
+
+# Reset the "Account_Number" column to range from 1 to 5,000,000
+combined_df['Account_Number'] = range(1, len(combined_df) + 1)
+
+# Save the combined dataframe to a new .csv file in the archive folder
+combined_df.to_csv(os.path.join(archive_path, combined_file), index=False)
+
+print("All variant files have been combined into All_Variants_Combined.csv with updated Account_Number and saved in the archive folder.")
 ```
+
+Instructions:
+
+- Replace /path/to/your/archive/folder/ with the path to your archive folder.
 
 **Step 5**
 
@@ -202,32 +213,81 @@ Create the following blank .txt files:
 ## Environment setup
 
 ```bash
-conda create -n voicecraft python=3.9.16
-conda activate voicecraft
+conda create -n muledetect python=3.11.4
+conda activate muledetect
 
-pip install -e git+https://github.com/facebookresearch/audiocraft.git@c5157b5bf14bf83449c17ea1eeb66c19fb4bc7f0#egg=audiocraft
-pip install xformers==0.0.22
-pip install torchaudio==2.0.2 torch==2.0.1 # this assumes your system is compatible with CUDA 11.7, otherwise checkout https://pytorch.org/get-started/previous-versions/#v201
-apt-get install ffmpeg # if you don't already have ffmpeg installed
-apt-get install espeak-ng # backend for the phonemizer installed below
-pip install tensorboard==2.16.2
-pip install phonemizer==3.2.1
-pip install datasets==2.16.0
-pip install torchmetrics==0.11.1
-pip install huggingface_hub==0.22.2
-# install MFA for getting forced-alignment, this could take a few minutes
-conda install -c conda-forge montreal-forced-aligner=2.2.17 openfst=1.8.2 kaldi=5.5.1068
-# install MFA english dictionary and model
-mfa model download dictionary english_us_arpa
-mfa model download acoustic english_us_arpa
-# pip install huggingface_hub
-# conda install pocl # above gives an warning for installing pocl, not sure if really need this
-
-# to run ipynb
-conda install -n voicecraft ipykernel --no-deps --force-reinstall
+pip install matplotlib==3.8.0
+pip install pandas==1.5.3
+pip install numpy==1.24.4
+pip install scikit-learn==1.4.2
+pip install joblib==1.2.0
+pip install xgboost
+pip install tensorflow
+pip install pycaret
 ```
 
 ## Usage
+
+Run it step wise to understand better.
+
+**Step 1:**
+
+- The notebook: [2. 0-5_months_train_6-7_test_base.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/2.%200-5_months_train_6-7_test_base.ipynb)
+
+- Follow the comments in the notebook.
+
+- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
+
+**Step 2:**
+
+- The notebook: [3. 0-5_months_train_6-7_test_base_less.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/3.%200-5_months_train_6-7_test_base_less.ipynb)
+
+- Follow the comments in the notebook.
+
+- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
+
+**Step 3:**
+
+- The notebook: [4. Base_train_Base_test.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/4.%20Base_train_Base_test.ipynb)
+
+- Follow the comments in the notebook.
+
+- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
+
+**Step 4:**
+
+- The notebook: [5. Base_train_1st_half_test_2nd_half.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/5.%20Base_train_1st_half_test_2nd_half.ipynb)
+
+- Follow the comments in the notebook.
+
+- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
+
+**Step 5:**
+
+- The notebook: [6. Base_train_99%_test_1%.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/6.%20Base_train_99%25_test_1%25.ipynb)
+
+- Follow the comments in the notebook.
+
+- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
+
+**Step 6:**
+
+- The notebook: [7. All_variants_train_base_test.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/7.%20All_variants_train_base_test.ipynb)
+
+- Follow the comments in the notebook.
+
+- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
+
+**Step 7:**
+
+- The notebook: [8. Base_train_Variant_1_test.ipynb](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/32%20Column%20Dataset/scripts/baselinemodels-roc/8.%20Base_train_Variant_1_test.ipynb)
+
+- Follow the comments in the notebook.
+
+- Refer this [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf) for more information.
+
+
+
 
 
 The [first notebook](notebooks/generate_dataset_variants.ipynb) regards the process of sampling from a large dataset to obtain the different variants that constitute the suite of datasets.
