@@ -322,6 +322,11 @@ Run it step wise to understand better.
 
 **Note:** The final model, which achieved an accuracy of 99%, is detailed in step 6. The other steps serve as foundational elements that contributed to the development and understanding of the model. To gain a comprehensive understanding of the process from the ground up, it is essential to review all steps. For a detailed, step-by-step explanation, please **refer to the [document](https://github.com/Aggarwal-Gavesh-25/Mule-Account-Detection/blob/main/Mule_Account_Detection/Mule%20Account%20Detection.pdf).** Additionally, reviewing the comments within the notebook will provide further insights.
 
+**Note:**
+- The model is trained on a dataset that captures the relationship between features and the classification of accounts as fraudulent or non-fraudulent.
+- Upon completing the training, the model applies this learned knowledge to a testing dataset to estimate the risk percentage associated with each account.
+- A threshold is then set on this risk score to identify and generate a list of accounts flagged as fraudulent (risk > threshold).
+
 **Step 1:**
 
 > Divided the dataset based on "month".
